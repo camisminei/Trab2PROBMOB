@@ -49,6 +49,49 @@ public class DBToDoHelper extends SQLiteOpenHelper {
         String query = "DROP TABLE IF EXISTS " + TABLE_NAME_TAREFA + ";";
     }
 
-    //@Override
+    public long insert_Tarefa(Tarefas t) {
+        long returnDB;
+        db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        // os atributos que sempre devem existir
+        values.put(TAREFA_COLUM_ID, t.getIdTarefa());
+        values.put(TAREFA_COLUM_TITULO, t.getTituloTarefa());
+        values.put(TAREFA_COLUM_DATA, t.getData());
+        values.put(TAREFA_COLUM_HORA, t.getHora());
+        returnDB = db.insert(TABLE_CREATE_TAREFA, null, values);
+        String res = Long.toString(returnDB);
+        Log.i("DBToDoHelper", res);
+        db.close();
+        return returnDB;
+    }
+
+    public ArrayList<Tarefas> selectAllTarefas() {
+        String[] coluns = {TAREFA_COLUM_ID,
+                        TAREFA_COLUM_TITULO,
+                        TAREFA_COLUM_DESCRICAO,
+                        TAREFA_COLUM_DATA,
+                        TAREFA_COLUM_HORA,
+                        TAREFA_COLUM_ALARME,
+                        TAREFA_COLUM_LOCAL};
+        Cursor cursor = getWritableDatabase().query(TABLE_NAME_TAREFA, coluns, null, null, null, null, "ID", null);
+        ArrayList<Tarefas> listTarefas = new ArrayList<Tarefas>();
+        while(cursor.moveToNext()) {
+            Tarefas t = new Tarefas();
+            t.setIdTarefa(cursor.getInt(0));
+            t.setTituloTarefa(cursor.getString(1));
+            t.setDescricaoTarefa(cursor.getString(2));
+            t.setData(cursor.getString(3));
+            t.setHora(cursor.getString(4));
+            //tratar os booleans no DB
+            //t.setAlarme(cursor.getString(5));
+            //t.setLocal(cursor.get);
+            listTarefas.add(t);
+        }
+        cursor.close();
+
+        return listTarefas;
+
+    }
+
 
 }
