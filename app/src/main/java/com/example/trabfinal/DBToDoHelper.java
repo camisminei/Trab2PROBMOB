@@ -26,7 +26,7 @@ public class DBToDoHelper extends SQLiteOpenHelper {
 
     //Tabela usuário
     private static final String TABLE_NAME_USUARIO = "Usuarios";
-    private static final String    USUARIO_COLUM_ID = "ID";
+    private static final String USUARIO_COLUM_ID = "ID";
     private static final String USUARIO_COLUM_NOME = "Nome";
     private static final String USUARIO_COLUM_EMAIL = "Email";
     private static final String USUARIO_COLUM_TELEFONE = "Telefone";
@@ -35,22 +35,26 @@ public class DBToDoHelper extends SQLiteOpenHelper {
     SQLiteDatabase db;
 
     private static final String TABLE_CREATE_TAREFA =
-            "create table " + TABLE_NAME_TAREFA + " ("
+            "create table " + TABLE_NAME_TAREFA
+                    + " ("
                     + TAREFA_COLUM_ID + " integer primary key, "
                     + TAREFA_COLUM_TITULO + " text, "
                     + TAREFA_COLUM_DESCRICAO + " text, "
                     + TAREFA_COLUM_DATA + " text, "
                     + TAREFA_COLUM_HORA + " text, "
                     + TAREFA_COLUM_ALARME + " boolean, "
-                    + TAREFA_COLUM_LOCAL + " boolean);";
+                    + TAREFA_COLUM_LOCAL + " boolean" +
+                    ");";
 
     private static final String TABLE_CREATE_USUARIO =
-            "create table " + TABLE_NAME_USUARIO + " ("
+            "create table " + TABLE_NAME_USUARIO
+            + " ("
             + USUARIO_COLUM_ID + " integer primary key, "
             + USUARIO_COLUM_NOME + " text, "
             + USUARIO_COLUM_EMAIL + " text, "
             + USUARIO_COLUM_TELEFONE + " text, "
-            + USUARIO_COLUM_SENHA + " text);";
+            + USUARIO_COLUM_SENHA + " text"
+            + " );";
 
     public DBToDoHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -167,9 +171,8 @@ public class DBToDoHelper extends SQLiteOpenHelper {
             t.setDescricaoTarefa(cursor.getString(2));
             t.setData(cursor.getString(3));
             t.setHora(cursor.getString(4));
-            //tratar os booleans no DB
-            //t.setAlarme(cursor.getString(5));
-            //t.setLocal(cursor.get);
+            t.setAlarme(cursor.getInt(5));
+            t.setLocal(cursor.getInt(6));
             listTarefas.add(t);
         }
         cursor.close();
@@ -177,6 +180,30 @@ public class DBToDoHelper extends SQLiteOpenHelper {
         return listTarefas;
 
     }
+
+    public ArrayList<Usuario> selectAllUsarios() {
+        String[] coluns = {USUARIO_COLUM_ID,
+                USUARIO_COLUM_NOME,
+                USUARIO_COLUM_EMAIL,
+                USUARIO_COLUM_TELEFONE};
+        Cursor cursor = getWritableDatabase().query(TABLE_NAME_USUARIO, coluns, null, null, null, null, "ID", null);
+        ArrayList<Usuario> listUsuarios = new ArrayList<Usuario>();
+        while(cursor.moveToNext()) {
+            Usuario u = new Usuario();
+            u.setId(cursor.getInt(0));
+            u.setNome(cursor.getString(1));
+            u.setEmail(cursor.getString(2));
+            u.setTelefone(cursor.getString(3));
+
+            listUsuarios.add(u);
+        }
+        cursor.close();
+
+        return listUsuarios;
+
+    }
+
+
 
 
 }
