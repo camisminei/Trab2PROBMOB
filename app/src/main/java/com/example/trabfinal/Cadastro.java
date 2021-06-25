@@ -36,7 +36,7 @@ public class Cadastro extends AppCompatActivity {
             edtEmail.setText(altUser.getEmail());
             edtTelefone.setText(altUser.getTelefone());
             edtSenha.setText(altUser.getSenha());
-            user.setId(altUser.getId());
+            user.setId(altUser.getIdUsuario());
         }else{
             btnVariavel.setText("Salvar");
         }

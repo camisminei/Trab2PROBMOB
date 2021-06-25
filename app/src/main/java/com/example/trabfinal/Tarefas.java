@@ -8,8 +8,8 @@ public class Tarefas implements Serializable {
     private String descricaoTarefa;
     private String data;
     private String hora;
-    private boolean alarme;
-    private boolean local;
+    private int alarme;
+    private int local;
 
     public Tarefas() {
     }
@@ -50,13 +50,21 @@ public class Tarefas implements Serializable {
 
     public void setHora(String hora) { this.hora = hora; }
 
-    public boolean getAlarme() { return this.alarme; }
+    public int getAlarme() {
+        return alarme;
+    }
 
-    public void setAlarme(boolean alarme) { this.alarme = alarme; }
+    public void setAlarme(int alarme) {
+        this.alarme = alarme;
+    }
 
-    public boolean getLocal() { return this.local; }
+    public int getLocal() {
+        return local;
+    }
 
-    public void setLocal(boolean local) { this.local = local; }
+    public void setLocal(int local) {
+        this.local = local;
+    }
 
     @Override
     public String toString(){

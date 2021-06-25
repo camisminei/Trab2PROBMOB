@@ -26,7 +26,7 @@ public class DBToDoHelper extends SQLiteOpenHelper {
 
     //Tabela usuário
     private static final String TABLE_NAME_USUARIO = "Usuarios";
-    private static final int    USUARIO_COLUM_ID = "ID";
+    private static final String    USUARIO_COLUM_ID = "ID";
     private static final String USUARIO_COLUM_NOME = "Nome";
     private static final String USUARIO_COLUM_EMAIL = "Email";
     private static final String USUARIO_COLUM_TELEFONE = "Telefone";
@@ -69,7 +69,7 @@ public class DBToDoHelper extends SQLiteOpenHelper {
         db.execSQL(query);
         query = "DROP TABLE IF EXISTS " + TABLE_NAME_USUARIO + ";";
         db.execSQL(query);
-        onCreate(db);
+        this.onCreate(db);
     }
 
     public long insert_Tarefa(Tarefas t) {
@@ -91,8 +91,8 @@ public class DBToDoHelper extends SQLiteOpenHelper {
     public long insertUser(Usuario u) {
         long returnDB;
         db = this.getWritableDatabase();
-        Content values = new ContentValues();
-        values.put(USUARIO_COLUM_ID, u.getId());
+        ContentValues values = new ContentValues();
+        values.put(USUARIO_COLUM_ID, u.getIdUsuario());
         values.put(USUARIO_COLUM_NOME, u.getNome());
         values.put(USUARIO_COLUM_EMAIL, u.getEmail());
         values.put(USUARIO_COLUM_TELEFONE, u.getTelefone());
@@ -124,16 +124,31 @@ public class DBToDoHelper extends SQLiteOpenHelper {
         long returnDB;
         this.db = getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(t.getTituloTarefa());
-        values.put(t.getDescricaoTarefa());
-        values.put(t.getData());
-        values.put(t.getHora());
-        values.put(t.getLocal());
-        values.put(t.getAlarme());
-        //values.put();
+        values.put(TAREFA_COLUM_TITULO, t.getTituloTarefa());
+        values.put(TAREFA_COLUM_DESCRICAO, t.getDescricaoTarefa());
+        values.put(TAREFA_COLUM_DATA, t.getData());
+        values.put(TAREFA_COLUM_HORA, t.getHora());
+        values.put(TAREFA_COLUM_LOCAL, t.getLocal());
+        values.put(TAREFA_COLUM_ALARME, t.getAlarme());
+        String[] args = {String.valueOf(t.getIdTarefa())};
+        returnDB = db.update(TABLE_NAME_TAREFA, values, "ID=?", args);
+        db.close();
+        return returnDB;
     }
 
-    //TODO updateUsuario
+    public long updateUsuario(Usuario u) {
+        long returnDB;
+        this.db = getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(USUARIO_COLUM_NOME, u.getNome());
+        values.put(USUARIO_COLUM_EMAIL, u.getEmail());
+        values.put(USUARIO_COLUM_TELEFONE, u.getTelefone());
+        values.put(USUARIO_COLUM_SENHA, u.getSenha());
+        String[] args = {String.valueOf(u.getIdUsuario())};
+        returnDB = db.update(TABLE_NAME_USUARIO, values, "ID=?", args);
+        db.close();
+        return returnDB;
+    }
 
     public ArrayList<Tarefas> selectAllTarefas() {
         String[] coluns = {TAREFA_COLUM_ID,
