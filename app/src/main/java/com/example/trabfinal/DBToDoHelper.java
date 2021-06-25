@@ -69,6 +69,7 @@ public class DBToDoHelper extends SQLiteOpenHelper {
         db.execSQL(query);
         query = "DROP TABLE IF EXISTS " + TABLE_NAME_USUARIO + ";";
         db.execSQL(query);
+        onCreate(db);
     }
 
     public long insert_Tarefa(Tarefas t) {
