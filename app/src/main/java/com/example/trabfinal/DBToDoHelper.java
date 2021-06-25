@@ -13,6 +13,8 @@ public class DBToDoHelper extends SQLiteOpenHelper {
 
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "ToDo.db";
+
+    //Tabela tarefas
     private static final String TABLE_NAME_TAREFA = "Tarefas";
     private static final String TAREFA_COLUM_ID = "ID";
     private static final String TAREFA_COLUM_TITULO = "Titulo";
@@ -21,6 +23,14 @@ public class DBToDoHelper extends SQLiteOpenHelper {
     private static final String TAREFA_COLUM_HORA = "Hora";
     private static final String TAREFA_COLUM_ALARME = "Alarme";
     private static final String TAREFA_COLUM_LOCAL = "Localizacao";
+
+    //Tabela usuário
+    private static final String TABLE_NAME_USUARIO = "Usuarios";
+    private static final int    USUARIO_COLUM_ID = "ID";
+    private static final String USUARIO_COLUM_NOME = "Nome";
+    private static final String USUARIO_COLUM_EMAIL = "Email";
+    private static final String USUARIO_COLUM_TELEFONE = "Telefone";
+    private static final String USUARIO_COLUM_SENHA = "Senha";
 
     SQLiteDatabase db;
 
@@ -33,6 +43,14 @@ public class DBToDoHelper extends SQLiteOpenHelper {
                     + TAREFA_COLUM_HORA + " text, "
                     + TAREFA_COLUM_ALARME + " boolean, "
                     + TAREFA_COLUM_LOCAL + " boolean);";
+
+    private static final String TABLE_CREATE_USUARIO =
+            "create table " + TABLE_NAME_USUARIO + " ("
+            + USUARIO_COLUM_ID + " integer primary key, "
+            + USUARIO_COLUM_NOME + " text, "
+            + USUARIO_COLUM_EMAIL + " text, "
+            + USUARIO_COLUM_TELEFONE + " text, "
+            + USUARIO_COLUM_SENHA + " text);";
 
     public DBToDoHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -64,6 +82,53 @@ public class DBToDoHelper extends SQLiteOpenHelper {
         db.close();
         return returnDB;
     }
+
+    public long insertUser(Usuario u) {
+        long returnDB;
+        db = this.getWritableDatabase();
+        Content values = new ContentValues();
+        values.put(USUARIO_COLUM_ID, u.getId());
+        values.put(USUARIO_COLUM_NOME, u.getNome());
+        values.put(USUARIO_COLUM_EMAIL, u.getEmail());
+        values.put(USUARIO_COLUM_TELEFONE, u.getTelefone());
+        values.put(USUARIO_COLUM_SENHA, u.getSenha());
+        returnDB = db.insert(TABLE_CREATE_USUARIO, null, values);
+        String res = Long.toString(returnDB);
+        Log.i("DBToDoHelper", res);
+        db.close();
+        return returnDB;
+    }
+
+    public long deleteUsuario(Usuario u) {
+        long returnDB;
+        db = this.getWritableDatabase();
+        String[] args = {String.valueOf(u.getIdUsuario())};
+        returnDB = db.delete(TABLE_NAME_USUARIO, USUARIO_COLUM_ID + "=?", args);
+        return returnDB;
+    }
+
+    public long deleteTarefa(Tarefas t) {
+        long returnDB;
+        db = this.getWritableDatabase();
+        String[] args = {String.valueOf(t.getIdTarefa())};
+        returnDB = db.delete(TABLE_NAME_TAREFA, TAREFA_COLUM_ID + "=?", args);
+        return returnDB;
+    }
+
+    public long updateTarefa(Tarefas t) {
+        long returnDB;
+        this.db = getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(t.getTituloTarefa());
+        values.put(t.getDescricaoTarefa());
+        values.put(t.getData());
+        values.put(t.getHora());
+        values.put(t.getLocal());
+        values.put(t.getAlarme());
+        //values.put();
+    }
+
+    //TODO updateUsuario
 
     public ArrayList<Tarefas> selectAllTarefas() {
         String[] coluns = {TAREFA_COLUM_ID,

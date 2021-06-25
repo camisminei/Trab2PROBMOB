@@ -10,7 +10,7 @@ public class Usuario implements Serializable {
 
     public Usuario(){}
 
-    public int getId() {
+    public int getIdUsuario() {
         return id;
     }
 
