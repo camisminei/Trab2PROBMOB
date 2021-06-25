@@ -72,7 +72,7 @@ public class DBToDoHelper extends SQLiteOpenHelper {
         this.onCreate(db);
     }
 
-    public long insert_Tarefa(Tarefas t) {
+    public long insertTarefa(Tarefas t) {
         long returnDB;
         db = this.getWritableDatabase();
         ContentValues values = new ContentValues();

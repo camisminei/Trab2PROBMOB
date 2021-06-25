@@ -13,7 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class Cadastro extends AppCompatActivity {
     private EditText edtEmail, edtTelefone, edtSenha, edtNome;
     Usuario user, altUser;
-    DBUsuarioHelper userHelper;
+    DBToDoHelper userHelper;
     long retornoDB;
     private Button btnVariavel;
 
@@ -27,7 +27,7 @@ public class Cadastro extends AppCompatActivity {
         Intent it = getIntent();
         altUser=(Usuario)it.getSerializableExtra("ch_user");
         user=new Usuario();
-        userHelper= new DBUsuarioHelper(Cadastro.this);
+        userHelper= new DBToDoHelper(Cadastro.this);
         btnVariavel=findViewById(R.id.btnVariavel);
 
         if(altUser!=null){
@@ -54,7 +54,7 @@ public class Cadastro extends AppCompatActivity {
                 user.setSenha(senha);
 
                 if(btnVariavel.getText().toString().equals("SALVAR")){
-                    retornoDB=userHelper.inserir(user);
+                    retornoDB=userHelper.insertUser(user);
                     if (retornoDB==-1){
                         Toast.makeText(Cadastro.this, "Erro ao cadastrar",
                                 Toast.LENGTH_SHORT).show();
@@ -63,7 +63,7 @@ public class Cadastro extends AppCompatActivity {
                                 Toast.LENGTH_SHORT).show();
                     }
                 }else{
-                    userHelper.atualizar(user);
+                    userHelper.updateUsuario(user);
                     userHelper.close();
                 }
                 finish();
