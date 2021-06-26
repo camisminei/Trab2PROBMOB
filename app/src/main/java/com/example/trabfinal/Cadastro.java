@@ -30,7 +30,7 @@ public class Cadastro extends AppCompatActivity {
         userHelper= new DBToDoHelper(Cadastro.this);
         btnVariavel=findViewById(R.id.btnVariavel);
 
-        if(altUser!=null){
+        if(altUser != null){
             btnVariavel.setText("Alterar");
             edtNome.setText(altUser.getNome());
             edtEmail.setText(altUser.getEmail());
