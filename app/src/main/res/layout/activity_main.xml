@@ -8,7 +8,7 @@
     tools:context=".MainActivity">
 
     <Button
-        android:id="@+id/bttnCadastrar"
+        android:id="@+id/bttnTelaCadastro"
         style="@style/Widget.MaterialComponents.Button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -22,21 +22,22 @@
         app:backgroundTint="#13B0DF"
         app:cornerRadius="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/bttnLogin"
+        app:layout_constraintEnd_toStartOf="@+id/bttnTelaLogin"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/bttnLogin"
+        android:id="@+id/bttnTelaLogin"
         style="@style/Widget.MaterialComponents.Button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:text="Login"
+        android:onClick="telaLogin"
         app:backgroundTint="#13B0DF"
         app:cornerRadius="20dp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/bttnCadastrar"
+        app:layout_constraintBaseline_toBaselineOf="@+id/bttnTelaCadastro"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/bttnCadastrar" />
+        app:layout_constraintStart_toEndOf="@+id/bttnTelaCadastro" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

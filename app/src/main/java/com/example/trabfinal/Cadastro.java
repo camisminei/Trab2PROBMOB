@@ -7,28 +7,26 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class Cadastro extends AppCompatActivity {
     private EditText edtEmail, edtTelefone, edtSenha, edtNome;
     Usuario user, altUser;
     DBToDoHelper userHelper;
-    long retornoDB;
     private Button btnVariavel;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro);
-        edtNome=findViewById(R.id.edtNome);
-        edtEmail=findViewById(R.id.edtEmail);
-        edtTelefone=findViewById(R.id.edtTelefone);
-        edtSenha=findViewById(R.id.edtSenha);
+        edtNome = findViewById(R.id.edtNome);
+        edtEmail = findViewById(R.id.edtEmail);
+        edtTelefone = findViewById(R.id.edtTelefone);
+        edtSenha = findViewById(R.id.edtSenha);
         Intent it = getIntent();
-        altUser=(Usuario)it.getSerializableExtra("ch_user");
-        user=new Usuario();
-        userHelper= new DBToDoHelper(Cadastro.this);
-        btnVariavel=findViewById(R.id.btnVariavel);
+        altUser = (Usuario)it.getSerializableExtra("ch_user");
+        user = new Usuario();
+        userHelper = new DBToDoHelper(Cadastro.this);
+        btnVariavel = findViewById(R.id.bttnCadastrar);
 
         if(altUser != null){
             btnVariavel.setText("Alterar");
@@ -38,7 +36,7 @@ public class Cadastro extends AppCompatActivity {
             edtSenha.setText(altUser.getSenha());
             user.setId(altUser.getIdUsuario());
         }else{
-            btnVariavel.setText("Salvar");
+            btnVariavel.setText("Cadastrar");
         }
         btnVariavel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,7 +51,7 @@ public class Cadastro extends AppCompatActivity {
                 user.setTelefone(telefone);
                 user.setSenha(senha);
 
-                if(btnVariavel.getText().toString().equals("SALVAR")){
+                if(btnVariavel.getText().toString().equals("CADASTRAR")){
                     retornoDB=userHelper.insertUser(user);
                     if (retornoDB==-1){
                         Toast.makeText(Cadastro.this, "Erro ao cadastrar",
@@ -69,6 +67,13 @@ public class Cadastro extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    public void voltaInicio(View view) {
+
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+
     }
 
 }

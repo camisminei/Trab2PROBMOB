@@ -21,5 +21,12 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void telaLogin(View view) {
+
+        Intent intent = new Intent(this, Login.class);
+        startActivity(intent);
+
+    }
+
 
 }
