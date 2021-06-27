@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -28,16 +29,16 @@ public class Login extends AppCompatActivity {
         String email = edtLoginEmail.getText().toString();
         String pass = edtLoginPassword.getText().toString();
         //implementar busca de senha
-        /* String password = userHelper.buscarSenha(email);
+        String password = userHelper.buscaSenha(email);
         if(password.equals(pass)) {
-            Intent it = new Intent(this, classeDpsDeLogar.class);
+            Intent it = new Intent(this, TarefasActivity.class);
             startActivity(it);
         } else {
 
             Toast toast = Toast.makeText(this, "Usuário não encontrado", Toast.LENGTH_LONG);
             toast.show();
         }
-         */
+
     }
 
 
