@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class DBToDoHelper extends SQLiteOpenHelper {
 
     private static final int DATABASE_VERSION = 1;
-    private static final String DATABASE_NAME = "ToDo.db";
+    private static final String DATABASE_NAME = "ToDo";
 
     //Tabela tarefas
     private static final String TABLE_NAME_TAREFA = "Tarefas";
@@ -34,10 +34,16 @@ public class DBToDoHelper extends SQLiteOpenHelper {
 
     SQLiteDatabase db;
 
+    public DBToDoHelper (Context context) {
+
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
+
+    }
+
     private static final String TABLE_CREATE_TAREFA =
             "create table " + TABLE_NAME_TAREFA
                     + " ("
-                    + TAREFA_COLUM_ID + " integer primary key, "
+                    + TAREFA_COLUM_ID + " integer primary key autoincrement, "
                     + TAREFA_COLUM_TITULO + " text, "
                     + TAREFA_COLUM_DESCRICAO + " text, "
                     + TAREFA_COLUM_DATA + " text, "
@@ -49,29 +55,26 @@ public class DBToDoHelper extends SQLiteOpenHelper {
     private static final String TABLE_CREATE_USUARIO =
             "create table " + TABLE_NAME_USUARIO
             + " ("
-            + USUARIO_COLUM_ID + " integer primary key, "
+            + USUARIO_COLUM_ID + " integer primary key autoincrement, "
             + USUARIO_COLUM_NOME + " text, "
             + USUARIO_COLUM_EMAIL + " text, "
             + USUARIO_COLUM_TELEFONE + " text, "
             + USUARIO_COLUM_SENHA + " text"
             + " );";
 
-    public DBToDoHelper(Context context) {
-        super(context, DATABASE_NAME, null, DATABASE_VERSION);
-    }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(TABLE_CREATE_TAREFA);
         db.execSQL(TABLE_CREATE_USUARIO);
-        this.db = db;
+        //this.db = db;
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        String query = "DROP TABLE IF EXISTS " + TABLE_NAME_TAREFA + ";";
+        String query = "DROP TABLE IF EXISTS " + TABLE_NAME_TAREFA;
         db.execSQL(query);
-        query = "DROP TABLE IF EXISTS " + TABLE_NAME_USUARIO + ";";
+        query = "DROP TABLE IF EXISTS " + TABLE_NAME_USUARIO;
         db.execSQL(query);
         this.onCreate(db);
     }
@@ -85,7 +88,7 @@ public class DBToDoHelper extends SQLiteOpenHelper {
         values.put(TAREFA_COLUM_TITULO, t.getTituloTarefa());
         values.put(TAREFA_COLUM_DATA, t.getData());
         values.put(TAREFA_COLUM_HORA, t.getHora());
-        returnDB = db.insert(TABLE_CREATE_TAREFA, null, values);
+        returnDB = db.insert(TABLE_NAME_TAREFA, null, values);
         String res = Long.toString(returnDB);
         Log.i("DBToDoHelper", res);
         db.close();
@@ -96,12 +99,12 @@ public class DBToDoHelper extends SQLiteOpenHelper {
         long returnDB;
         db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(USUARIO_COLUM_ID, u.getIdUsuario());
+        //values.put(USUARIO_COLUM_ID, "null");
         values.put(USUARIO_COLUM_NOME, u.getNome());
         values.put(USUARIO_COLUM_EMAIL, u.getEmail());
         values.put(USUARIO_COLUM_TELEFONE, u.getTelefone());
         values.put(USUARIO_COLUM_SENHA, u.getSenha());
-        returnDB = db.insert(TABLE_CREATE_USUARIO, null, values);
+        returnDB = db.insert(TABLE_NAME_USUARIO, null, values);
         String res = Long.toString(returnDB);
         Log.i("DBToDoHelper", res);
         db.close();
