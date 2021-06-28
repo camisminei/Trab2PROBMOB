@@ -50,21 +50,13 @@ public class Tarefas implements Serializable {
 
     public void setHora(String hora) { this.hora = hora; }
 
-    public int getAlarme() {
-        return alarme;
-    }
+    public int getAlarme() { return alarme; }
 
-    public void setAlarme(int alarme) {
-        this.alarme = alarme;
-    }
+    public void setAlarme(int alarme) { this.alarme = alarme; }
 
-    public int getLocal() {
-        return local;
-    }
+    public int getLocal() { return local; }
 
-    public void setLocal(int local) {
-        this.local = local;
-    }
+    public void setLocal(int local) { this.local = local; }
 
     @Override
     public String toString(){
