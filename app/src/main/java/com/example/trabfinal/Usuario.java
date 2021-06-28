@@ -9,6 +9,24 @@ public class Usuario implements Serializable {
     private String nome, email, telefone, senha;
 
     public Usuario(){}
+    public Usuario(int id, String nome, String email, String telefone, String senha) {
+
+        this.id = id;
+        this.nome = nome;
+        this.email = email;
+        this.telefone = telefone;
+        this.senha = senha;
+
+    }
+
+    public Usuario (String nome, String email, String telefone, String senha) {
+
+        this.nome = nome;
+        this.email = email;
+        this.telefone = telefone;
+        this.senha = senha;
+
+    }
 
     public int getIdUsuario() {
         return id;
