@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/tituloTarefa"
             android:ems="10"
-            android:inputType="text"
+            android:inputType="textPersonName"
             android:hint="Título da Tarefa"/>
         <EditText
             android:layout_width="match_parent"
