@@ -21,29 +21,29 @@ public class Login extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         edtLoginEmail = findViewById(R.id.edtLoginEmail);
         edtLoginPassword = findViewById(R.id.edtLoginSenha);
+        btnLogin = findViewById(R.id.bttnLogin);
+        userHelper = new DBToDoHelper(Login.this);
+
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String email = edtLoginEmail.getText().toString();
+                String pass = edtLoginPassword.getText().toString();
+                String password = userHelper.buscaSenha(email);
+                userHelper.close();
+                if(password.equals(pass)) {
+                    Intent it = new Intent(Login.this, TarefasActivity.class);
+                    startActivity(it);
+                } else if(password.equals("Não encontrado")) {
+                    Toast toast = Toast.makeText(Login.this, "Usuário não encontrado", Toast.LENGTH_LONG);
+                    toast.show();
+                } else {
+                    Toast toast = Toast.makeText(Login.this, "Senha incorreta", Toast.LENGTH_LONG);
+                    toast.show();
+                }
+            }
+        });
 
     }
 
-    public void conectar(View view) {
-
-        String email = edtLoginEmail.getText().toString();
-        String pass = edtLoginPassword.getText().toString();
-        //implementar busca de senha
-        String password = userHelper.buscaSenha(email);
-        if(password.equals(pass)) {
-            Intent it = new Intent(this, TarefasActivity.class);
-            startActivity(it);
-        } else {
-
-            Toast toast = Toast.makeText(this, "Usuário não encontrado", Toast.LENGTH_LONG);
-            toast.show();
-        }
-
     }
-
-
-
-
-
-
-}

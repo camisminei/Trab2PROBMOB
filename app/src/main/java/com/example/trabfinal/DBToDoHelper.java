@@ -208,8 +208,14 @@ public class DBToDoHelper extends SQLiteOpenHelper {
 
     public String buscaSenha(String email) {
         db = this.getReadableDatabase();
-        String query = "select Email, Senha from " + TABLE_NAME_USUARIO;
-        Cursor cursor = db.rawQuery(query, null);
+        String[] coluns = {
+                USUARIO_COLUM_ID,
+                USUARIO_COLUM_NOME,
+                USUARIO_COLUM_EMAIL,
+                USUARIO_COLUM_TELEFONE,
+                USUARIO_COLUM_SENHA
+        };
+        Cursor cursor = db.query(TABLE_NAME_USUARIO, coluns, null, null, null, null, "ID", null);
         String aux, ret;
         ret = "Não encontrado";
         if(cursor.moveToFirst()) {

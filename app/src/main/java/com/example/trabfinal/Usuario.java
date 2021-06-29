@@ -28,6 +28,10 @@ public class Usuario implements Serializable {
 
     }
 
+    public Usuario (String email) {
+        this.email = email;
+    }
+
     public int getIdUsuario() {
         return id;
     }
