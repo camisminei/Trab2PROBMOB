@@ -4,8 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class TarefasActivity extends AppCompatActivity {
 
@@ -43,6 +45,36 @@ public class TarefasActivity extends AppCompatActivity {
         }else{
             btnVariavel.setText("Salvar");
         }
+
+        btnVariavel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String titulo = tituloTarefa.getText().toString();
+                String descricao = descricaoTarefa.getText().toString();
+                String date = data.getText().toString();
+                String hour = hora.getText().toString();
+                String alarm = alarme.getText().toString();
+                String locall = local.getText().toString();
+                long retornoDB;
+                tarefa.setTituloTarefa(titulo);
+                tarefa.setDescricaoTarefa(descricao);
+                tarefa.setData(date);
+                tarefa.setHora(hour);
+                tarefa.setAlarme(Integer.parseInt(alarm));
+                tarefa.setLocal(Integer.parseInt(locall));
+                if(btnVariavel.getText().toString().equals("Salvar")){
+                    retornoDB=dbHelper.insertTarefa(tarefa);
+                    if(retornoDB==-1){
+                        Toast.makeText(TarefasActivity.this,"Erro ao cadastar",Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(TarefasActivity.this,"Cadastro Realizado com Sucesso",Toast.LENGTH_SHORT).show();
+                    }
+                }else{
+                    dbHelper.atualizar(tarefa);
+                    dbHelper.close();
+                }
+            }
+        });
 
 
 
