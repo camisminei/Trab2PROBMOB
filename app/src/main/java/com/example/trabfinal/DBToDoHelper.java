@@ -233,6 +233,18 @@ public class DBToDoHelper extends SQLiteOpenHelper {
     }
 
 
-    public void atualizar(Tarefas tarefa) {
+    public long atualizar(Tarefas tarefa) {
+        long retorno;
+        db=getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(TAREFA_COLUM_TITULO, tarefa.getTituloTarefa());
+        values.put(TAREFA_COLUM_DESCRICAO,tarefa.getDescricaoTarefa());
+        values.put(TAREFA_COLUM_DATA,tarefa.getData());
+        values.put(TAREFA_COLUM_ALARME,tarefa.getAlarme());
+        values.put(TAREFA_COLUM_LOCAL,tarefa.getLocal());
+        String[] args = {String.valueOf(tarefa.getIdTarefa())};
+        retorno=db.update(TABLE_NAME_TAREFA,values,"id=?",args);
+        db.close();
+        return retorno;
     }
 }
