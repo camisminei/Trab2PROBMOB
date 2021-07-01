@@ -37,14 +37,14 @@
             android:layout_height="wrap_content"
             android:id="@+id/hora"
             android:ems="10"
-            android:inputType="time"
+            android:inputType="text"
             android:hint="Horas"/>
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/alarme"
             android:ems="10"
-            android:inputType="time"
+            android:inputType="text"
             android:hint="Alarme"/>
         <EditText
             android:layout_width="match_parent"
@@ -56,7 +56,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/bttnAddTarefa"
+            android:id="@+id/btnVariavel"
             android:layout_gravity="center_horizontal"/>
 
     </LinearLayout>

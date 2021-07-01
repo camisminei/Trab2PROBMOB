@@ -48,10 +48,9 @@ public class DBToDoHelper extends SQLiteOpenHelper {
                     + TAREFA_COLUM_DESCRICAO + " text, "
                     + TAREFA_COLUM_DATA + " text, "
                     + TAREFA_COLUM_HORA + " text, "
-                    + TAREFA_COLUM_ALARME + " boolean, "
-                    + TAREFA_COLUM_LOCAL + " boolean" +
+                    + TAREFA_COLUM_ALARME + " text, "
+                    + TAREFA_COLUM_LOCAL + " text" +
                     ");";
-
     private static final String TABLE_CREATE_USUARIO =
             "create table " + TABLE_NAME_USUARIO
             + " ("
@@ -84,10 +83,13 @@ public class DBToDoHelper extends SQLiteOpenHelper {
         db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         // os atributos que sempre devem existir
-        values.put(TAREFA_COLUM_ID, t.getIdTarefa());
+        //values.put(TAREFA_COLUM_ID, t.getIdTarefa());
         values.put(TAREFA_COLUM_TITULO, t.getTituloTarefa());
+        values.put(TAREFA_COLUM_DESCRICAO, t.getDescricaoTarefa());
         values.put(TAREFA_COLUM_DATA, t.getData());
         values.put(TAREFA_COLUM_HORA, t.getHora());
+        values.put(TAREFA_COLUM_ALARME, t.getAlarme());
+        values.put(TAREFA_COLUM_LOCAL, t.getLocal());
         returnDB = db.insert(TABLE_NAME_TAREFA, null, values);
         String res = Long.toString(returnDB);
         Log.i("DBToDoHelper", res);
@@ -174,8 +176,8 @@ public class DBToDoHelper extends SQLiteOpenHelper {
             t.setDescricaoTarefa(cursor.getString(2));
             t.setData(cursor.getString(3));
             t.setHora(cursor.getString(4));
-            t.setAlarme(cursor.getInt(5));
-            t.setLocal(cursor.getInt(6));
+            t.setAlarme(cursor.getString(5));
+            t.setLocal(cursor.getString(6));
             listTarefas.add(t);
         }
         cursor.close();

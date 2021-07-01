@@ -31,7 +31,7 @@ public class TarefasActivity extends AppCompatActivity {
         altTarefa=(Tarefas)it.getSerializableExtra("ch_tarefa");
         tarefa = new Tarefas();
         dbHelper=new DBToDoHelper(TarefasActivity.this);
-        btnVariavel=findViewById(R.id.bttnAddTarefa);
+        btnVariavel=findViewById(R.id.btnVariavel);
 
         if(altTarefa!=null){
             btnVariavel.setText("Alterar");
@@ -60,8 +60,8 @@ public class TarefasActivity extends AppCompatActivity {
                 tarefa.setDescricaoTarefa(descricao);
                 tarefa.setData(date);
                 tarefa.setHora(hour);
-                tarefa.setAlarme(Integer.parseInt(alarm));
-                tarefa.setLocal(Integer.parseInt(locall));
+                tarefa.setAlarme(alarm);
+                tarefa.setLocal(locall);
                 if(btnVariavel.getText().toString().equals("Salvar")){
                     retornoDB=dbHelper.insertTarefa(tarefa);
                     if(retornoDB==-1){
@@ -73,6 +73,7 @@ public class TarefasActivity extends AppCompatActivity {
                     dbHelper.atualizar(tarefa);
                     dbHelper.close();
                 }
+                finish();
             }
         });
 
@@ -80,5 +81,8 @@ public class TarefasActivity extends AppCompatActivity {
 
 
 
+    }
+
+    public void criarTarefa(View view) {
     }
 }

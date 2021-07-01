@@ -8,23 +8,16 @@ public class Tarefas implements Serializable {
     private String descricaoTarefa;
     private String data;
     private String hora;
-    private int alarme;
-    private int local;
+    private String alarme;
+    private String local;
 
     public Tarefas() {
     }
 
-    public Tarefas(int id, String titulo, String desc, String data, String hora) {
-        this.idTarefa = id;
+    public Tarefas(String titulo, String desc, String data, String hora) {
+        //this.idTarefa = id;
         this.tituloTarefa = titulo;
         this.descricaoTarefa = desc;
-        this.data = data;
-        this.hora = hora;
-    }
-
-    public Tarefas(int id, String titulo, String data, String hora) {
-        this.idTarefa = id;
-        this.tituloTarefa = titulo;
         this.data = data;
         this.hora = hora;
     }
@@ -50,13 +43,13 @@ public class Tarefas implements Serializable {
 
     public void setHora(String hora) { this.hora = hora; }
 
-    public int getAlarme() { return alarme; }
+    public String getAlarme() { return alarme; }
 
-    public void setAlarme(int alarme) { this.alarme = alarme; }
+    public void setAlarme(String alarme) { this.alarme = alarme; }
 
-    public int getLocal() { return local; }
+    public String getLocal() { return local; }
 
-    public void setLocal(int local) { this.local = local; }
+    public void setLocal(String local) { this.local = local; }
 
     @Override
     public String toString(){
