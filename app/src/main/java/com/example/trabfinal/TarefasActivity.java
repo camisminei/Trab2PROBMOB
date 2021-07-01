@@ -31,7 +31,7 @@ public class TarefasActivity extends AppCompatActivity {
         altTarefa=(Tarefas)it.getSerializableExtra("ch_tarefa");
         tarefa = new Tarefas();
         dbHelper=new DBToDoHelper(TarefasActivity.this);
-        btnVariavel=findViewById(R.id.btnConcluido);
+        btnVariavel=findViewById(R.id.bttnAddTarefa);
 
         if(altTarefa!=null){
             btnVariavel.setText("Alterar");

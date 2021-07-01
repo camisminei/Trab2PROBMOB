@@ -14,12 +14,14 @@
             android:layout_width="match_parent"
             android:id="@+id/listTarefas">
         </ListView>
+
         <Button
+            android:id="@+id/bttnAddTarefa"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Novo Cadastro"
-            android:id="@+id/btnConcluido"
-            android:layout_gravity="center_horizontal"/>
+            android:layout_gravity="center_horizontal"
+            android:text="Nova Tarefa"
+            android:onClick="criarTarefa"/>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

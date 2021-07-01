@@ -32,7 +32,7 @@ public class Login extends AppCompatActivity {
                 String password = userHelper.buscaSenha(email);
                 userHelper.close();
                 if(password.equals(pass)) {
-                    Intent it = new Intent(Login.this, TarefasActivity.class);
+                    Intent it = new Intent(Login.this, TelaTarefas.class);
                     startActivity(it);
                 } else if(password.equals("Não encontrado")) {
                     Toast toast = Toast.makeText(Login.this, "Usuário não encontrado", Toast.LENGTH_LONG);
