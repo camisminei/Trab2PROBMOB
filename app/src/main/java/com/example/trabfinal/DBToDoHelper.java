@@ -170,7 +170,7 @@ public class DBToDoHelper extends SQLiteOpenHelper {
         String senha = u.getSenha();
         if(senha.equals("")) {
             String novaSenha = cripto(senha);
-            values.put(USUARIO_COLUM_SENHA, senha);
+            values.put(USUARIO_COLUM_SENHA, novaSenha);
         }
 
         String[] args = {String.valueOf(u.getIdUsuario())};
@@ -280,7 +280,7 @@ public class DBToDoHelper extends SQLiteOpenHelper {
 
     public String noCripto(String senha) throws GeneralSecurityException {
 
-        return = AESCrypt.decrypt(chave, senha);
+        return AESCrypt.decrypt(chave, senha);
 
     }
 }
