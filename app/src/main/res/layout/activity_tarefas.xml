@@ -39,13 +39,16 @@
             android:ems="10"
             android:inputType="text"
             android:hint="Horas"/>
-        <EditText
+        <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/alarme"
-            android:ems="10"
-            android:inputType="text"
-            android:hint="Alarme"/>
+            android:id="@+id/btnAtivar"
+            android:text="Ativar Alarme"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnCancel"
+            android:text="Cancelar Alarme"/>
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

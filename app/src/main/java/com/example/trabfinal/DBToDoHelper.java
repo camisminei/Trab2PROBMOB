@@ -49,8 +49,8 @@ public class DBToDoHelper extends SQLiteOpenHelper {
                     + TAREFA_COLUM_DESCRICAO + " text, "
                     + TAREFA_COLUM_DATA + " text, "
                     + TAREFA_COLUM_HORA + " text, "
-                    + TAREFA_COLUM_ALARME + " integer, "
-                    + TAREFA_COLUM_LOCAL + " integer" +
+                    + TAREFA_COLUM_ALARME + " text, "
+                    + TAREFA_COLUM_LOCAL + " text" +
                     ");";
     private static final String TABLE_CREATE_USUARIO =
             "create table " + TABLE_NAME_USUARIO
@@ -177,8 +177,8 @@ public class DBToDoHelper extends SQLiteOpenHelper {
             t.setDescricaoTarefa(cursor.getString(2));
             t.setData(cursor.getString(3));
             t.setHora(cursor.getString(4));
-            t.setAlarme(cursor.getInt(5));
-            t.setLocal(cursor.getInt(6));
+            t.setAlarme(cursor.getString(5));
+            t.setLocal(cursor.getString(6));
             listTarefas.add(t);
         }
         cursor.close();
