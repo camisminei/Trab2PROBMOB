@@ -9,6 +9,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.security.MessageDigest;
+
 public class Cadastro extends AppCompatActivity {
     private EditText edtEmail, edtTelefone, edtSenha, edtNome;
     Usuario user, altUser;
@@ -51,6 +53,7 @@ public class Cadastro extends AppCompatActivity {
                 u.setNome(nome);
                 u.setEmail(email);
                 u.setTelefone(telefone);
+                //senha = trataSenha(senha);
                 u.setSenha(senha);
                 System.out.println(btnVariavel.getText().toString());
                 if (btnVariavel.getText().toString().equals("Cadastrar")) {
@@ -73,6 +76,12 @@ public class Cadastro extends AppCompatActivity {
         }});
 
     }
+
+   /* public String trataSenha(String senha) {
+        MessageDigest md = MessageDigest.getInstance("SHA-256");
+        md.update(Byte.parseByte(senha));
+
+    } */
 
     public void voltaInicio(View view) {
 

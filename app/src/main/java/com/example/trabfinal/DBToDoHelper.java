@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class DBToDoHelper extends SQLiteOpenHelper {
 
@@ -48,8 +49,8 @@ public class DBToDoHelper extends SQLiteOpenHelper {
                     + TAREFA_COLUM_DESCRICAO + " text, "
                     + TAREFA_COLUM_DATA + " text, "
                     + TAREFA_COLUM_HORA + " text, "
-                    + TAREFA_COLUM_ALARME + " text, "
-                    + TAREFA_COLUM_LOCAL + " text" +
+                    + TAREFA_COLUM_ALARME + " integer, "
+                    + TAREFA_COLUM_LOCAL + " integer" +
                     ");";
     private static final String TABLE_CREATE_USUARIO =
             "create table " + TABLE_NAME_USUARIO
@@ -176,8 +177,8 @@ public class DBToDoHelper extends SQLiteOpenHelper {
             t.setDescricaoTarefa(cursor.getString(2));
             t.setData(cursor.getString(3));
             t.setHora(cursor.getString(4));
-            t.setAlarme(cursor.getString(5));
-            t.setLocal(cursor.getString(6));
+            t.setAlarme(cursor.getInt(5));
+            t.setLocal(cursor.getInt(6));
             listTarefas.add(t);
         }
         cursor.close();
@@ -209,26 +210,26 @@ public class DBToDoHelper extends SQLiteOpenHelper {
     }
 
     public String buscaSenha(String email) {
-        db = this.getReadableDatabase();
-        String[] coluns = {
-                USUARIO_COLUM_ID,
-                USUARIO_COLUM_NOME,
-                USUARIO_COLUM_EMAIL,
-                USUARIO_COLUM_TELEFONE,
-                USUARIO_COLUM_SENHA
-        };
-        Cursor cursor = db.query(TABLE_NAME_USUARIO, coluns, null, null, null, null, "ID", null);
-        String aux, ret;
-        ret = "Não encontrado";
-        if(cursor.moveToFirst()) {
-            do {
-                aux = cursor.getString(2);
-                if(aux.equals(email)) {
-                    ret = cursor.getString(4);
-                    break;
-                }
-            } while (cursor.moveToNext());
-        }
+        String ret = "Não encontrado";
+            db = this.getReadableDatabase();
+            String[] coluns = {
+                    USUARIO_COLUM_ID,
+                    USUARIO_COLUM_NOME,
+                    USUARIO_COLUM_EMAIL,
+                    USUARIO_COLUM_TELEFONE,
+                    USUARIO_COLUM_SENHA
+            };
+            Cursor cursor = db.query(TABLE_NAME_USUARIO, coluns, null, null, null, null, "ID", null);
+            String aux;
+            if (cursor.moveToFirst()) {
+                do {
+                    aux = cursor.getString(2);
+                    if (aux.equals(email)) {
+                        ret = cursor.getString(4);
+                        break;
+                    }
+                } while (cursor.moveToNext());
+            }
 
         return ret;
 

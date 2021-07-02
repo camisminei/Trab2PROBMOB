@@ -53,8 +53,8 @@ public class TarefasActivity extends AppCompatActivity {
                 String descricao = descricaoTarefa.getText().toString();
                 String date = data.getText().toString();
                 String hour = hora.getText().toString();
-                String alarm = alarme.getText().toString();
-                String locall = local.getText().toString();
+                int alarm = Integer.parseInt(alarme.getText().toString());
+                int locall = Integer.parseInt(local.getText().toString());
                 long retornoDB;
                 tarefa.setTituloTarefa(titulo);
                 tarefa.setDescricaoTarefa(descricao);
