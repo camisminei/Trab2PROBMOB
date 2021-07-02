@@ -36,6 +36,7 @@ public class DBToDoHelper extends SQLiteOpenHelper {
     private static final String USUARIO_COLUM_EMAIL = "Email";
     private static final String USUARIO_COLUM_TELEFONE = "Telefone";
     private static final String USUARIO_COLUM_SENHA = "Senha";
+    private static final String USUARIO_COLUM_FOTO = "Foto";
 
     SQLiteDatabase db;
 
@@ -56,6 +57,7 @@ public class DBToDoHelper extends SQLiteOpenHelper {
                     + TAREFA_COLUM_ALARME + " text, "
                     + TAREFA_COLUM_LOCAL + " text" +
                     ");";
+
     private static final String TABLE_CREATE_USUARIO =
             "create table " + TABLE_NAME_USUARIO
             + " ("
@@ -63,7 +65,8 @@ public class DBToDoHelper extends SQLiteOpenHelper {
             + USUARIO_COLUM_NOME + " text, "
             + USUARIO_COLUM_EMAIL + " text, "
             + USUARIO_COLUM_TELEFONE + " text, "
-            + USUARIO_COLUM_SENHA + " text"
+            + USUARIO_COLUM_SENHA + " text, "
+            + USUARIO_COLUM_FOTO + " BLOB"
             + " );";
 
 
@@ -106,10 +109,14 @@ public class DBToDoHelper extends SQLiteOpenHelper {
         long returnDB;
         db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        //values.put(USUARIO_COLUM_ID, "null");
-        values.put(USUARIO_COLUM_NOME, u.getNome());
-        values.put(USUARIO_COLUM_EMAIL, u.getEmail());
-        values.put(USUARIO_COLUM_TELEFONE, u.getTelefone());
+
+        if(!u.getNome().equals(""))
+            values.put(USUARIO_COLUM_NOME, u.getNome());
+        if(!u.getEmail().equals(""))
+            values.put(USUARIO_COLUM_EMAIL, u.getEmail());
+        if(!u.getTelefone().equals(""))
+            values.put(USUARIO_COLUM_TELEFONE, u.getTelefone());
+
         String senha = u.getSenha();
 
         if(!senha.equals("")) {
@@ -117,18 +124,14 @@ public class DBToDoHelper extends SQLiteOpenHelper {
             values.put(USUARIO_COLUM_SENHA, novaSenha);
         }
 
+        //add foto e tratar
+
+        byte[] foto = u.getFoto();
+
         returnDB = db.insert(TABLE_NAME_USUARIO, null, values);
         String res = Long.toString(returnDB);
         Log.i("DBToDoHelper", res);
         db.close();
-        return returnDB;
-    }
-
-    public long deleteUsuario(Usuario u) {
-        long returnDB;
-        db = this.getWritableDatabase();
-        String[] args = {String.valueOf(u.getIdUsuario())};
-        returnDB = db.delete(TABLE_NAME_USUARIO, USUARIO_COLUM_ID + "=?", args);
         return returnDB;
     }
 
@@ -203,28 +206,6 @@ public class DBToDoHelper extends SQLiteOpenHelper {
         cursor.close();
 
         return listTarefas;
-
-    }
-
-    public ArrayList<Usuario> selectAllUsarios() {
-        String[] coluns = {USUARIO_COLUM_ID,
-                USUARIO_COLUM_NOME,
-                USUARIO_COLUM_EMAIL,
-                USUARIO_COLUM_TELEFONE};
-        Cursor cursor = getWritableDatabase().query(TABLE_NAME_USUARIO, coluns, null, null, null, null, "ID", null);
-        ArrayList<Usuario> listUsuarios = new ArrayList<Usuario>();
-        while(cursor.moveToNext()) {
-            Usuario u = new Usuario();
-            u.setId(cursor.getInt(0));
-            u.setNome(cursor.getString(1));
-            u.setEmail(cursor.getString(2));
-            u.setTelefone(cursor.getString(3));
-
-            listUsuarios.add(u);
-        }
-        cursor.close();
-
-        return listUsuarios;
 
     }
 

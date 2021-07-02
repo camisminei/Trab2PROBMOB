@@ -81,6 +81,7 @@ public class Cadastro extends AppCompatActivity {
                         Toast.makeText(Cadastro.this, "Cadastro Realizado com Sucesso",
                                 Toast.LENGTH_SHORT).show();
                         userHelper.close();
+                        addFoto();
                         finish();
                     }
                } else {
@@ -104,6 +105,11 @@ public class Cadastro extends AppCompatActivity {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
 
+    }
+
+    public void addFoto() {
+        Intent intent = new Intent(this, FotoActivity.class);
+        startActivity(intent);
     }
 
 

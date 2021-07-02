@@ -7,19 +7,10 @@ import java.io.Serializable;
 public class Usuario implements Serializable {
     private int id; //id chave primaria
     private String nome, email, telefone, senha;
+    private byte[] foto;
 
     public Usuario(){}
-    public Usuario(int id, String nome, String email, String telefone, String senha) {
-
-        this.id = id;
-        this.nome = nome;
-        this.email = email;
-        this.telefone = telefone;
-        this.senha = senha;
-
-    }
-
-    public Usuario (String nome, String email, String telefone, String senha) {
+    public Usuario(String nome, String email, String telefone, String senha) {
 
         this.nome = nome;
         this.email = email;
@@ -28,8 +19,14 @@ public class Usuario implements Serializable {
 
     }
 
-    public Usuario (String email) {
+    public Usuario (String nome, String email, String telefone, String senha, byte[] foto) {
+
+        this.nome = nome;
         this.email = email;
+        this.telefone = telefone;
+        this.senha = senha;
+        this.foto = foto;
+
     }
 
     public int getIdUsuario() {
@@ -71,6 +68,10 @@ public class Usuario implements Serializable {
     public void setSenha(String senha) {
         this.senha = senha;
     }
+
+    public byte[] getFoto() { return foto; }
+
+    public void setFoto(byte[] foto) { this.foto = foto; }
 
     @Override
     public String toString() {
