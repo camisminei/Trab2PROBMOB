@@ -8,18 +8,21 @@ public class Tarefas implements Serializable {
     private String descricaoTarefa;
     private String data;
     private String hora;
-    private String alarme;
+    //private String horasAlarme;
+    //private String minutosAlarme;
     private String local;
 
     public Tarefas() {
     }
 
-    public Tarefas(String titulo, String desc, String data, String hora) {
-        //this.idTarefa = id;
+    public Tarefas(int id, String titulo, String desc, String data, String hora ) {
+        this.idTarefa = id;
         this.tituloTarefa = titulo;
         this.descricaoTarefa = desc;
         this.data = data;
         this.hora = hora;
+        //this.horasAlarme=horasAlarme;
+        //this.minutosAlarme=minutosAlarme;
     }
 
     //getters and setters
@@ -43,13 +46,25 @@ public class Tarefas implements Serializable {
 
     public void setHora(String hora) { this.hora = hora; }
 
-    public String getAlarme() { return alarme; }
-
-    public void setAlarme(String alarme) { this.alarme = alarme; }
-
     public String getLocal() { return local; }
 
     public void setLocal(String local) { this.local = local; }
+
+    /*public String getHorasAlarme() {
+        return horasAlarme;
+    }
+
+    public void setHorasAlarme(String horasAlarme) {
+        this.horasAlarme = horasAlarme;
+    }
+
+    public String getMinutosAlarme() {
+        return minutosAlarme;
+    }
+
+    public void setMinutosAlarme(String minutosAlarme) {
+        this.minutosAlarme = minutosAlarme;
+    }*/
 
     @Override
     public String toString(){
