@@ -11,6 +11,10 @@ import android.widget.Toast;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.security.GeneralSecurityException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 
 public class Login extends AppCompatActivity {
 
@@ -33,8 +37,17 @@ public class Login extends AppCompatActivity {
             public void onClick(View v) {
                 String email = edtLoginEmail.getText().toString();
                 String pass = edtLoginPassword.getText().toString();
-                String password = userHelper.buscaSenha(email);
+
+                String password = "";
+
+                try {
+                    password = userHelper.buscaSenha(email);
+                } catch (GeneralSecurityException e) {
+                    e.printStackTrace();
+                }
+
                 userHelper.close();
+
                 if (!email.equals("") && !pass.equals("")) {
                     if (password.equals(pass)) {
                         Intent it = new Intent(Login.this, TelaTarefas.class);

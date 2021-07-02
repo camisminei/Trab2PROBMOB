@@ -15,7 +15,6 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class TelaTarefas extends AppCompatActivity {
 
@@ -38,7 +37,7 @@ public class TelaTarefas extends AppCompatActivity {
         bttnAddTarefa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(TelaTarefas.this, TarefasActivity.class);
+                Intent intent = new Intent(TelaTarefas.this, CadastroTarefasActivity.class);
                 startActivity(intent);
             }
 
@@ -47,7 +46,7 @@ public class TelaTarefas extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 Tarefas a1=(Tarefas)arrayAdapterTarefas.getItem(position);
-                Intent it=new Intent(TelaTarefas.this, TarefasActivity.class);
+                Intent it=new Intent(TelaTarefas.this, CadastroTarefasActivity.class);
                 it.putExtra("ch_tarefa",a1);
                 startActivity(it);
             }

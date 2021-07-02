@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class TarefasActivity extends AppCompatActivity {
+public class CadastroTarefasActivity extends AppCompatActivity {
 
     private EditText tituloTarefa, descricaoTarefa, data, hora, alarme, local;
     DBToDoHelper dbHelper;
@@ -25,13 +25,13 @@ public class TarefasActivity extends AppCompatActivity {
         descricaoTarefa=findViewById(R.id.descricaoTarefa);
         data=findViewById(R.id.data);
         hora=findViewById(R.id.hora);
-        alarme=findViewById(R.id.alarme);
+        //alarme=findViewById(R.id.alarme);
         local=findViewById(R.id.local);
         Intent it = getIntent();
         altTarefa=(Tarefas)it.getSerializableExtra("ch_tarefa");
         tarefa = new Tarefas();
-        dbHelper=new DBToDoHelper(TarefasActivity.this);
-        btnVariavel=findViewById(R.id.btnVariavel);
+        dbHelper = new DBToDoHelper(CadastroTarefasActivity.this);
+        btnVariavel = findViewById(R.id.btnVariavel);
 
         if(altTarefa!=null){
             btnVariavel.setText("Alterar");
@@ -65,9 +65,9 @@ public class TarefasActivity extends AppCompatActivity {
                 if(btnVariavel.getText().toString().equals("Salvar")){
                     retornoDB=dbHelper.insertTarefa(tarefa);
                     if(retornoDB==-1){
-                        Toast.makeText(TarefasActivity.this,"Erro ao cadastar",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(CadastroTarefasActivity.this,"Erro ao cadastar",Toast.LENGTH_SHORT).show();
                     }else{
-                        Toast.makeText(TarefasActivity.this,"Cadastro Realizado com Sucesso",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(CadastroTarefasActivity.this,"Cadastro Realizado com Sucesso",Toast.LENGTH_SHORT).show();
                     }
                 }else{
                     dbHelper.atualizar(tarefa);

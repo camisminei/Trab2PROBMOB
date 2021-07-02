@@ -7,6 +7,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.scottyab.aescrypt.AESCrypt;
+
+import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -14,6 +17,7 @@ public class DBToDoHelper extends SQLiteOpenHelper {
 
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "ToDo";
+    public static final String chave = "criptografia-facom";
 
     //Tabela tarefas
     private static final String TABLE_NAME_TAREFA = "Tarefas";
@@ -98,7 +102,7 @@ public class DBToDoHelper extends SQLiteOpenHelper {
         return returnDB;
     }
 
-    public long insertUser(Usuario u) {
+    public long insertUser(Usuario u) throws GeneralSecurityException {
         long returnDB;
         db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -106,7 +110,13 @@ public class DBToDoHelper extends SQLiteOpenHelper {
         values.put(USUARIO_COLUM_NOME, u.getNome());
         values.put(USUARIO_COLUM_EMAIL, u.getEmail());
         values.put(USUARIO_COLUM_TELEFONE, u.getTelefone());
-        values.put(USUARIO_COLUM_SENHA, u.getSenha());
+        String senha = u.getSenha();
+
+        if(!senha.equals("")) {
+            String novaSenha = cripto(senha);
+            values.put(USUARIO_COLUM_SENHA, novaSenha);
+        }
+
         returnDB = db.insert(TABLE_NAME_USUARIO, null, values);
         String res = Long.toString(returnDB);
         Log.i("DBToDoHelper", res);
@@ -146,14 +156,23 @@ public class DBToDoHelper extends SQLiteOpenHelper {
         return returnDB;
     }
 
-    public long updateUsuario(Usuario u) {
+    public long updateUsuario(Usuario u) throws GeneralSecurityException {
         long returnDB;
         this.db = getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(USUARIO_COLUM_NOME, u.getNome());
-        values.put(USUARIO_COLUM_EMAIL, u.getEmail());
-        values.put(USUARIO_COLUM_TELEFONE, u.getTelefone());
-        values.put(USUARIO_COLUM_SENHA, u.getSenha());
+        if(!u.getNome().equals(""))
+            values.put(USUARIO_COLUM_NOME, u.getNome());
+        if(!u.getEmail().equals(""))
+            values.put(USUARIO_COLUM_EMAIL, u.getEmail());
+        if(!u.getTelefone().equals(""))
+            values.put(USUARIO_COLUM_TELEFONE, u.getTelefone());
+
+        String senha = u.getSenha();
+        if(senha.equals("")) {
+            String novaSenha = cripto(senha);
+            values.put(USUARIO_COLUM_SENHA, senha);
+        }
+
         String[] args = {String.valueOf(u.getIdUsuario())};
         returnDB = db.update(TABLE_NAME_USUARIO, values, "ID=?", args);
         db.close();
@@ -209,7 +228,7 @@ public class DBToDoHelper extends SQLiteOpenHelper {
 
     }
 
-    public String buscaSenha(String email) {
+    public String buscaSenha(String email) throws GeneralSecurityException {
         String ret = "Não encontrado";
             db = this.getReadableDatabase();
             String[] coluns = {
@@ -231,6 +250,8 @@ public class DBToDoHelper extends SQLiteOpenHelper {
                 } while (cursor.moveToNext());
             }
 
+        ret = noCripto(ret);
+
         return ret;
 
     }
@@ -249,5 +270,17 @@ public class DBToDoHelper extends SQLiteOpenHelper {
         retorno=db.update(TABLE_NAME_TAREFA,values,"id=?",args);
         db.close();
         return retorno;
+    }
+
+    public String cripto(String senha) throws GeneralSecurityException {
+
+        return AESCrypt.encrypt(chave, senha);
+
+    }
+
+    public String noCripto(String senha) throws GeneralSecurityException {
+
+        return = AESCrypt.decrypt(chave, senha);
+
     }
 }

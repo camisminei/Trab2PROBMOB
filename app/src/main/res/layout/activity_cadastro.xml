@@ -95,7 +95,7 @@
         android:layout_marginEnd="42dp"
         android:layout_marginRight="42dp"
         android:baselineAligned="false"
-        android:hint="VOLTAR"
+        android:hint="Voltar"
         android:onClick="voltaInicio"
         android:textColorHint="@color/white"
         app:backgroundTint="#13B0DF"

@@ -55,7 +55,7 @@ public class Tarefas implements Serializable {
 
     public String getLocal() { return local; }
 
-    public void setLocal(int local) {
+    public void setLocal(String local) {
         this.local = local;
     }
 

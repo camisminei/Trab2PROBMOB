@@ -9,7 +9,18 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.security.GeneralSecurityException;
+import java.security.InvalidKeyException;
+import java.security.Key;
 import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.KeyGenerator;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.SecretKey;
 
 public class Cadastro extends AppCompatActivity {
     private EditText edtEmail, edtTelefone, edtSenha, edtNome;
@@ -48,16 +59,20 @@ public class Cadastro extends AppCompatActivity {
                 String email = edtEmail.getText().toString();
                 String telefone = edtTelefone.getText().toString();
                 String senha = edtSenha.getText().toString();
-                long retornoDB;
+                long retornoDB = -1;
                 Usuario u = new Usuario();
                 u.setNome(nome);
                 u.setEmail(email);
                 u.setTelefone(telefone);
-                //senha = trataSenha(senha);
                 u.setSenha(senha);
-                System.out.println(btnVariavel.getText().toString());
+
                 if (btnVariavel.getText().toString().equals("Cadastrar")) {
-                    retornoDB = userHelper.insertUser(u);
+
+                    try {
+                        retornoDB = userHelper.insertUser(u);
+                    } catch (GeneralSecurityException e) {
+                        e.printStackTrace();
+                    }
 
                     if (retornoDB == -1) {
                         Toast.makeText(Cadastro.this, "Erro ao cadastrar",
@@ -69,7 +84,13 @@ public class Cadastro extends AppCompatActivity {
                         finish();
                     }
                } else {
-                    userHelper.updateUsuario(user);
+
+                    try {
+                        userHelper.updateUsuario(user);
+                    } catch (GeneralSecurityException e) {
+                        e.printStackTrace();
+                    }
+
                     userHelper.close();
                     finish();
             }
@@ -77,11 +98,6 @@ public class Cadastro extends AppCompatActivity {
 
     }
 
-   /* public String trataSenha(String senha) {
-        MessageDigest md = MessageDigest.getInstance("SHA-256");
-        md.update(Byte.parseByte(senha));
-
-    } */
 
     public void voltaInicio(View view) {
 
