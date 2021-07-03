@@ -2,8 +2,12 @@ package com.example.trabfinal;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,6 +21,11 @@ public class CadastroTarefasActivity extends AppCompatActivity {
     long retornoDB;
     private Button btnVariavel;
 
+    private Button btnCancel, btnAtivar;
+    AlarmManager alarmManager;
+    PendingIntent pedingIntent;
+    boolean isRepeat=false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,7 +34,8 @@ public class CadastroTarefasActivity extends AppCompatActivity {
         descricaoTarefa=findViewById(R.id.descricaoTarefa);
         data=findViewById(R.id.data);
         hora=findViewById(R.id.hora);
-        //alarme=findViewById(R.id.alarme);
+        btnAtivar=findViewById(R.id.btnAtivar);
+        btnCancel=findViewById(R.id.btnCancel);
         local=findViewById(R.id.local);
         Intent it = getIntent();
         altTarefa=(Tarefas)it.getSerializableExtra("ch_tarefa");
@@ -39,12 +49,29 @@ public class CadastroTarefasActivity extends AppCompatActivity {
             descricaoTarefa.setText(altTarefa.getDescricaoTarefa());
             data.setText(altTarefa.getData());
             hora.setText(altTarefa.getHora());
-            alarme.setText(altTarefa.getAlarme());
             local.setText(altTarefa.getLocal());
             tarefa.setIdTarefa(altTarefa.getIdTarefa());
         }else{
             btnVariavel.setText("Salvar");
         }
+        btnAtivar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(CadastroTarefasActivity.this,"Alarme Ativado",Toast.LENGTH_SHORT).show();
+                isRepeat=false;
+                startAlarme();
+            }
+        });
+
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(CadastroTarefasActivity.this,"Alarme Cancelado",Toast.LENGTH_SHORT).show();
+                if(alarmManager !=null){
+                    alarmManager.cancel(pedingIntent);
+                }
+            }
+        });
 
         btnVariavel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,14 +80,12 @@ public class CadastroTarefasActivity extends AppCompatActivity {
                 String descricao = descricaoTarefa.getText().toString();
                 String date = data.getText().toString();
                 String hour = hora.getText().toString();
-                String alarm = alarme.getText().toString();
                 String locall = local.getText().toString();
                 long retornoDB;
                 tarefa.setTituloTarefa(titulo);
                 tarefa.setDescricaoTarefa(descricao);
                 tarefa.setData(date);
                 tarefa.setHora(hour);
-                tarefa.setAlarme(alarm);
                 tarefa.setLocal(locall);
                 if(btnVariavel.getText().toString().equals("Salvar")){
                     retornoDB=dbHelper.insertTarefa(tarefa);
@@ -68,6 +93,7 @@ public class CadastroTarefasActivity extends AppCompatActivity {
                         Toast.makeText(CadastroTarefasActivity.this,"Erro ao cadastar",Toast.LENGTH_SHORT).show();
                     }else{
                         Toast.makeText(CadastroTarefasActivity.this,"Cadastro Realizado com Sucesso",Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(CadastroTarefasActivity.this, "Alarme Disparado!", Toast.LENGTH_LONG).show();
                     }
                 }else{
                     dbHelper.atualizar(tarefa);
@@ -76,11 +102,19 @@ public class CadastroTarefasActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
 
-
-
-
-
+    private void startAlarme() {
+        alarmManager=(AlarmManager)
+                this.getSystemService(Context.ALARM_SERVICE);
+        Intent it = new Intent(CadastroTarefasActivity.this, AlarmeToastReceiver.class);
+        pedingIntent=PendingIntent.getBroadcast(this,0,it,0);
+        if(!isRepeat){
+            alarmManager.set(AlarmManager.RTC, SystemClock.elapsedRealtime()+60*1000,pedingIntent);
+        }else{
+            //alarmManager.setInexactRepeating(AlarmManager.RTC, SystemClock.elapsedRealtime()+60*1000, 60*1000, pedingIntent);
+            alarmManager.set(AlarmManager.RTC, SystemClock.elapsedRealtime()+60*1000,pedingIntent);
+        }
     }
 
     public void criarTarefa(View view) {

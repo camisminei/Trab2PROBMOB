@@ -8,7 +8,6 @@ public class Tarefas implements Serializable {
     private String descricaoTarefa;
     private String data;
     private String hora;
-    private String alarme;
     private String local;
 
     public Tarefas() {
@@ -49,9 +48,7 @@ public class Tarefas implements Serializable {
 
     public void setHora(String hora) { this.hora = hora; }
 
-    public String getAlarme() { return alarme; }
 
-    public void setAlarme(String alarme) { this.alarme = alarme; }
 
     public String getLocal() { return local; }
 

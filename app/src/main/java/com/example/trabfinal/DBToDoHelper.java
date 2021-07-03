@@ -26,7 +26,7 @@ public class DBToDoHelper extends SQLiteOpenHelper {
     private static final String TAREFA_COLUM_DESCRICAO = "Descricao";
     private static final String TAREFA_COLUM_DATA = "Data";
     private static final String TAREFA_COLUM_HORA = "Hora";
-    private static final String TAREFA_COLUM_ALARME = "Alarme";
+    //private static final String TAREFA_COLUM_ALARME = "Alarme";
     private static final String TAREFA_COLUM_LOCAL = "Localizacao";
 
     //Tabela usuário
@@ -53,7 +53,7 @@ public class DBToDoHelper extends SQLiteOpenHelper {
                     + TAREFA_COLUM_DESCRICAO + " text, "
                     + TAREFA_COLUM_DATA + " text, "
                     + TAREFA_COLUM_HORA + " text, "
-                    + TAREFA_COLUM_ALARME + " text, "
+                    //+ TAREFA_COLUM_ALARME + " text, "
                     + TAREFA_COLUM_LOCAL + " text" +
                     ");";
     private static final String TABLE_CREATE_USUARIO =
@@ -93,7 +93,7 @@ public class DBToDoHelper extends SQLiteOpenHelper {
         values.put(TAREFA_COLUM_DESCRICAO, t.getDescricaoTarefa());
         values.put(TAREFA_COLUM_DATA, t.getData());
         values.put(TAREFA_COLUM_HORA, t.getHora());
-        values.put(TAREFA_COLUM_ALARME, t.getAlarme());
+        //.put(TAREFA_COLUM_ALARME, t.getAlarme());
         values.put(TAREFA_COLUM_LOCAL, t.getLocal());
         returnDB = db.insert(TABLE_NAME_TAREFA, null, values);
         String res = Long.toString(returnDB);
@@ -149,7 +149,7 @@ public class DBToDoHelper extends SQLiteOpenHelper {
         values.put(TAREFA_COLUM_DATA, t.getData());
         values.put(TAREFA_COLUM_HORA, t.getHora());
         values.put(TAREFA_COLUM_LOCAL, t.getLocal());
-        values.put(TAREFA_COLUM_ALARME, t.getAlarme());
+        //values.put(TAREFA_COLUM_ALARME, t.getAlarme());
         String[] args = {String.valueOf(t.getIdTarefa())};
         returnDB = db.update(TABLE_NAME_TAREFA, values, "ID=?", args);
         db.close();
@@ -185,7 +185,7 @@ public class DBToDoHelper extends SQLiteOpenHelper {
                         TAREFA_COLUM_DESCRICAO,
                         TAREFA_COLUM_DATA,
                         TAREFA_COLUM_HORA,
-                        TAREFA_COLUM_ALARME,
+                        //TAREFA_COLUM_ALARME,
                         TAREFA_COLUM_LOCAL};
         Cursor cursor = getWritableDatabase().query(TABLE_NAME_TAREFA, coluns, null, null, null, null, "ID", null);
         ArrayList<Tarefas> listTarefas = new ArrayList<Tarefas>();
@@ -196,8 +196,8 @@ public class DBToDoHelper extends SQLiteOpenHelper {
             t.setDescricaoTarefa(cursor.getString(2));
             t.setData(cursor.getString(3));
             t.setHora(cursor.getString(4));
-            t.setAlarme(cursor.getString(5));
-            t.setLocal(cursor.getString(6));
+            //t.setAlarme(cursor.getString(5));
+            t.setLocal(cursor.getString(5));
             listTarefas.add(t);
         }
         cursor.close();
@@ -264,7 +264,7 @@ public class DBToDoHelper extends SQLiteOpenHelper {
         values.put(TAREFA_COLUM_TITULO, tarefa.getTituloTarefa());
         values.put(TAREFA_COLUM_DESCRICAO,tarefa.getDescricaoTarefa());
         values.put(TAREFA_COLUM_DATA,tarefa.getData());
-        values.put(TAREFA_COLUM_ALARME,tarefa.getAlarme());
+        //values.put(TAREFA_COLUM_ALARME,tarefa.getAlarme());
         values.put(TAREFA_COLUM_LOCAL,tarefa.getLocal());
         String[] args = {String.valueOf(tarefa.getIdTarefa())};
         retorno=db.update(TABLE_NAME_TAREFA,values,"id=?",args);
@@ -280,7 +280,7 @@ public class DBToDoHelper extends SQLiteOpenHelper {
 
     public String noCripto(String senha) throws GeneralSecurityException {
 
-        return = AESCrypt.decrypt(chave, senha);
+        return AESCrypt.decrypt(chave, senha);
 
     }
 }
